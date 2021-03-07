@@ -1,1 +1,4 @@
-browser-sync start --server --files "./*.html" --no-open --no-notify --directory
+#!/bin/sh
+browser-sync start --server --files '**/*.html' --directory
+
+
