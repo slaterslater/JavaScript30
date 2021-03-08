@@ -17,8 +17,19 @@
 </script>
 <script type="text/babel">
   
-
-  const Days = () => {
+  const Days = ({data}) => {
+    console.log(data)
+    // return <p>{data ? 'ok' : 'loading...'}</p>
+    return (
+      <ul>
+        {data.map(repo => {
+          return <li>{repo.name}</li>
+        })}
+      </ul>
+    )
+  }
+  
+  const App = () => {
     const [data, setData] = React.useState(null)
 
     React.useEffect(() => {
@@ -35,15 +46,10 @@
       getRepo()
     }, [])
 
-    console.log(data)
-    return <p>{data ? 'ok' : 'loading...'}</p>
-  }
-  
-  const App = () => {
     return (
       <>
         <h1>Javascript30</h1>
-        <Days />
+        <Days data={data ? data : []} />
       </>
     )  
   }
