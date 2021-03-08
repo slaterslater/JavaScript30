@@ -4,56 +4,27 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="https://javascript30.com/images/favion-JS3.png">
   <title>JavaScript30</title>
 </head>
 <body>
-  <div id="root"></div>
+  <h1>JavaScript 30</h1>
+  <p id="info">Grab the course at <a href="https://JavaScript30.com">https://JavaScript30.com</a></p>
 </body>
-<script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone@7.13.7/babel.min.js"></script>
 <script>
-  
-</script>
-<script type="text/babel">
-  
-  const Days = ({data}) => {
-    console.log(data)
-    // return <p>{data ? 'ok' : 'loading...'}</p>
-    return (
-      <ul>
-        {data.map(repo => {
-          return <li>{repo.name}</li>
-        })}
-      </ul>
-    )
-  }
-  
-  const App = () => {
-    const [data, setData] = React.useState(null)
-
-    React.useEffect(() => {
-      async function getRepo(){
-        const endpoint = 'https://api.github.com/repos/slaterslater/JavaScript30/contents';
-        const response = await fetch(endpoint)
-        const contents = await response.json()
-        // return repo contents that match regex pattern
-        const complete = contents.filter(({name}) => {
-          return /^\d\d\s-.*/.exec(name);     
-        });
-        setData(complete)
-      }
-      getRepo()
-    }, [])
-
-    return (
-      <>
-        <h1>Javascript30</h1>
-        <Days data={data ? data : []} />
-      </>
-    )  
-  }
-
-  ReactDOM.render(<App />, document.getElementById('root'))
+  (async () => {
+    const rootnode = document.createElement('section')
+    const endpoint = 'https://api.github.com/repos/slaterslater/JavaScript30/contents';
+    const response = await fetch(endpoint)
+    const contents = await response.json()
+    const compares = string => /^\d\d\s-.*/.exec(string) // ie: "01 - " 
+    const finished = contents.filter(({name}) => compares(name))
+    finished.forEach( ({name}) => {
+      let div = document.createElement('div')
+      div.textContent = name;
+      rootnode.appendChild(div)
+    })
+    document.body.insertBefore(rootnode, document.getElementById('info'))
+  })();
 </script>
 </html>
