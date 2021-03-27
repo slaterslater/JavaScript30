@@ -96,6 +96,27 @@
   </div>
 
 <script>
+
+  const boxes = document.querySelectorAll('.item > input')
+  let lastChecked = 0;
+  boxes.forEach((box, index) => {
+      box.addEventListener('click', (e)=>{
+        if(e.shiftKey && e.target.checked) {
+          let i, end;
+          if (index > lastChecked) {
+            i = lastChecked;
+            end = index;
+          } else {
+            i = index;
+            end = lastChecked;
+          }
+          while(i < end){
+            boxes[i++].checked = true;
+          }
+        }
+        lastChecked = index;
+      })
+    })
 </script>
 </body>
 </html>
